@@ -3,8 +3,7 @@
 import { execFileSync } from "node:child_process";
 
 const apiBaseUrl = process.env.NETIKS_API_BASE_URL ?? "http://localhost:8000/api/v1";
-const dockerBin =
-  process.env.DOCKER_BIN ?? "/Applications/Docker.app/Contents/Resources/bin/docker";
+const dockerBin = process.env.DOCKER_BIN ?? "docker";
 
 const demoVendors = [
   {
