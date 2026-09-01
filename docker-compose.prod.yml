@@ -1,6 +1,6 @@
 services:
   web:
-    image: wisdomnetiks.azurecr.io/netiks-store/web:v1.0.0
+    image: wisdomnetiks.azurecr.io/netiks-store/web:v1.0.1
 
   gateway:
     image: wisdomnetiks.azurecr.io/netiks-store/gateway:v1.0.0
