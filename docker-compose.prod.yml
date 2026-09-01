@@ -1,0 +1,21 @@
+services:
+  web:
+    image: wisdomnetiks.azurecr.io/netiks-store/web:v1.0.0
+
+  gateway:
+    image: wisdomnetiks.azurecr.io/netiks-store/gateway:v1.0.0
+
+  identity-service:
+    image: wisdomnetiks.azurecr.io/netiks-store/identity-service:v1.0.0
+
+  vendor-service:
+    image: wisdomnetiks.azurecr.io/netiks-store/vendor-service:v1.0.0
+
+  catalog-service:
+    image: wisdomnetiks.azurecr.io/netiks-store/catalog-service:v1.0.0
+
+  media-service:
+    image: wisdomnetiks.azurecr.io/netiks-store/media-service:v1.0.0
+
+  admin-service:
+    image: wisdomnetiks.azurecr.io/netiks-store/admin-service:v1.0.0
