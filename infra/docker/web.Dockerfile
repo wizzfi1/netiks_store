@@ -13,4 +13,6 @@ COPY packages/shared-types /app/packages/shared-types
 
 WORKDIR /app/apps/web
 
-CMD ["npm", "run", "dev"]
+RUN npm run build
+
+CMD ["npm", "start"]
