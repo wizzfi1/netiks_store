@@ -25,7 +25,6 @@ WORKDIR /app
 
 COPY --from=builder /app/apps/web/.next/standalone ./
 COPY --from=builder /app/apps/web/.next/static ./.next/static
-COPY --from=builder /app/apps/web/public ./public
 
 EXPOSE 3000
 
