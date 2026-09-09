@@ -17,6 +17,7 @@ target-version = "py311"
 ignore = [
   "B008",   # FastAPI Depends/File in argument defaults - intentional pattern
   "RUF012", # SQLAlchemy __table_args__ mutable class var - intentional pattern
+  "I001",   # Import block sorting - handled by formatter, not enforced in CI
 ]
 
 [tool.pytest.ini_options]
