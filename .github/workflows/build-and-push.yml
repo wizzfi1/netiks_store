@@ -46,7 +46,9 @@ jobs:
         run: npm run lint:web
 
       - name: Validate Docker Compose config
-        run: docker compose config --quiet
+        run: |
+          cp .env.example .env
+          docker compose config --quiet
 
   build-and-push:
     name: Build and Push (${{ matrix.service }})
