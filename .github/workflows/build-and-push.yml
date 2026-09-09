@@ -84,7 +84,9 @@ jobs:
           subscription-id: ${{ vars.AZURE_SUBSCRIPTION_ID }}
 
       - name: Log in to ACR
-        run: az acr login --name ${{ vars.ACR_LOGIN_SERVER }}
+        run: |
+          TOKEN=$(az account get-access-token --resource https://containerregistry.azure.net --query accessToken -o tsv)
+          echo "$TOKEN" | docker login ${{ vars.ACR_LOGIN_SERVER }} -u "00000000-0000-0000-0000-000000000000" --password-stdin
 
       - name: Compute tags
         id: tags
