@@ -31,7 +31,7 @@ jobs:
         run: uv sync
 
       - name: Run Python lint (ruff)
-        run: uv run ruff check .
+        run: uvx ruff check .
 
       - name: Set up Node
         uses: actions/setup-node@v4
