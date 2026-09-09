@@ -1,0 +1,107 @@
+name: Build and Push
+
+on:
+  push:
+    branches:
+      - main
+    tags:
+      - "v*"
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  validate:
+    name: Validate
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v4
+
+      - name: Install Python dependencies
+        run: uv sync
+
+      - name: Run Python lint (ruff)
+        run: uv run ruff check .
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+
+      - name: Install Node dependencies
+        run: npm install
+
+      - name: Run web lint (ESLint)
+        run: npm run lint:web
+
+      - name: Validate Docker Compose config
+        run: docker compose config --quiet
+
+  build-and-push:
+    name: Build and Push (${{ matrix.service }})
+    runs-on: ubuntu-latest
+    needs: validate
+    strategy:
+      matrix:
+        include:
+          - service: web
+            dockerfile: infra/docker/web.Dockerfile
+          - service: gateway
+            dockerfile: apps/gateway/Dockerfile
+          - service: identity-service
+            dockerfile: services/identity-service/Dockerfile
+          - service: vendor-service
+            dockerfile: services/vendor-service/Dockerfile
+          - service: catalog-service
+            dockerfile: services/catalog-service/Dockerfile
+          - service: media-service
+            dockerfile: services/media-service/Dockerfile
+          - service: admin-service
+            dockerfile: services/admin-service/Dockerfile
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Azure login via OIDC
+        uses: azure/login@v2
+        with:
+          client-id: ${{ vars.AZURE_CLIENT_ID }}
+          tenant-id: ${{ vars.AZURE_TENANT_ID }}
+          subscription-id: ${{ vars.AZURE_SUBSCRIPTION_ID }}
+
+      - name: Log in to ACR
+        run: az acr login --name ${{ vars.ACR_LOGIN_SERVER }}
+
+      - name: Compute tags
+        id: tags
+        run: |
+          IMAGE="${{ vars.ACR_LOGIN_SERVER }}/netiks-store/${{ matrix.service }}"
+          SHA="${{ github.sha }}"
+          SHORT_SHA="${SHA::7}"
+          TAGS="${IMAGE}:${SHORT_SHA}"
+          if [[ "${{ github.ref }}" == refs/tags/v* ]]; then
+            VERSION="${{ github.ref_name }}"
+            TAGS="${TAGS},${IMAGE}:${VERSION},${IMAGE}:latest"
+          fi
+          echo "tags=${TAGS}" >> "$GITHUB_OUTPUT"
+
+      - name: Build and push
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: ${{ matrix.dockerfile }}
+          push: true
+          tags: ${{ steps.tags.outputs.tags }}
+          platforms: linux/amd64
