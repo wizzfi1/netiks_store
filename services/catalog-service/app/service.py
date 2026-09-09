@@ -6,7 +6,6 @@ from sqlalchemy.orm import Session
 
 from app.models import Category, Order, Product
 from app.repository import (
-    create_order,
     create_category,
     create_product,
     get_category_by_id,

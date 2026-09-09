@@ -13,6 +13,12 @@ members = [
 line-length = 100
 target-version = "py311"
 
+[tool.ruff.lint]
+ignore = [
+  "B008",   # FastAPI Depends/File in argument defaults - intentional pattern
+  "RUF012", # SQLAlchemy __table_args__ mutable class var - intentional pattern
+]
+
 [tool.pytest.ini_options]
 pythonpath = [
   "."
