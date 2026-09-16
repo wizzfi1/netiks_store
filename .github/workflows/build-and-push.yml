@@ -147,6 +147,8 @@ jobs:
             git fetch --tags origin
             git checkout --force "$VERSION"
 
+            [ -f .env ] || cp .env.example .env
+
             docker compose \
               -f docker-compose.yml \
               -f docker-compose.prod.yml \
