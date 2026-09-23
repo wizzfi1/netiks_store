@@ -6,7 +6,7 @@ services:
     env_file:
       - .env
     ports:
-      - "127.0.0.1:3001:3000"
+      - "127.0.0.1:${WEB_EXPOSE_PORT:-3001}:3000"
     restart: unless-stopped
     depends_on:
       gateway:
@@ -26,7 +26,7 @@ services:
       CATALOG_SERVICE_URL: ${CATALOG_SERVICE_URL:-http://catalog-service:8003}
       MEDIA_SERVICE_URL: ${MEDIA_SERVICE_URL:-http://media-service:8004}
     ports:
-      - "127.0.0.1:8000:8000"
+      - "127.0.0.1:${GATEWAY_EXPOSE_PORT:-8000}:8000"
     restart: unless-stopped
     depends_on:
       identity-service:

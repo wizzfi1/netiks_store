@@ -1,0 +1,21 @@
+services:
+  web:
+    image: ${REGISTRY}/web:${IMAGE_TAG}
+
+  gateway:
+    image: ${REGISTRY}/gateway:${IMAGE_TAG}
+
+  identity-service:
+    image: ${REGISTRY}/identity-service:${IMAGE_TAG}
+
+  vendor-service:
+    image: ${REGISTRY}/vendor-service:${IMAGE_TAG}
+
+  catalog-service:
+    image: ${REGISTRY}/catalog-service:${IMAGE_TAG}
+
+  media-service:
+    image: ${REGISTRY}/media-service:${IMAGE_TAG}
+
+  admin-service:
+    image: ${REGISTRY}/admin-service:${IMAGE_TAG}
