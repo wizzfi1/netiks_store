@@ -155,7 +155,8 @@ jobs:
 
             [ -f .env ] || cp .env.example .env
 
-            export IMAGE_TAG="${{ github.sha }}"
+            FULL_SHA="${{ github.sha }}"
+            export IMAGE_TAG="${FULL_SHA::7}"
             export REGISTRY="${{ vars.ACR_LOGIN_SERVER }}/netiks-store"
 
             docker compose \
