@@ -66,11 +66,6 @@ resource "azurerm_network_security_group" "main" {
   }
 }
 
-resource "azurerm_subnet_network_security_group_association" "main" {
-  subnet_id                 = azurerm_subnet.main.id
-  network_security_group_id = azurerm_network_security_group.main.id
-}
-
 resource "azurerm_public_ip" "main" {
   name                = var.public_ip_name
   location            = var.location
