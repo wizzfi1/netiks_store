@@ -4,7 +4,7 @@ resource "azurerm_network_interface" "main" {
   resource_group_name = var.resource_group_name
 
   ip_configuration {
-    name                          = "internal"
+    name                          = "ipconfig1"
     subnet_id                     = var.subnet_id
     private_ip_address_allocation = "Dynamic"
     public_ip_address_id          = var.public_ip_id
@@ -22,6 +22,8 @@ resource "azurerm_linux_virtual_machine" "main" {
   location            = var.location
   size                = var.vm_size
   admin_username      = var.admin_username
+  secure_boot_enabled = true
+  vtpm_enabled        = true
 
   network_interface_ids = [
     azurerm_network_interface.main.id,
@@ -47,5 +49,9 @@ resource "azurerm_linux_virtual_machine" "main" {
 
   identity {
     type = "SystemAssigned"
+  }
+
+  lifecycle {
+    ignore_changes = [admin_ssh_key, additional_capabilities, boot_diagnostics]
   }
 }
