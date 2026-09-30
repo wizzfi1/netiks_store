@@ -1,0 +1,10 @@
+subscription_id      = "your-azure-subscription-id"
+admin_ssh_public_key = "ssh-ed25519 AAAA... your-public-key-here"
+
+# All other variables have defaults matching the existing environment.
+# Override any of them here if you are standing up a second environment.
+
+# Example overrides for a second environment:
+# resource_group_name = "netiks-rg-dev"
+# vm_name             = "netiks-vm-dev"
+# registry_name       = "netiksdev"
