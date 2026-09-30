@@ -19,8 +19,8 @@ packages/
   shared-types/
 infra/
   docker/
-  nginx/
-  aws/
+  terraform/
+scripts/
 docs/
 ```
 
@@ -69,12 +69,18 @@ Services that still need further expansion:
 
 ## Local Service Endpoints
 
-- Frontend: `http://localhost:3001` by default in Docker Compose
-- Gateway: `http://localhost:8000`
-- Identity: `http://localhost:8001`
-- Vendor: `http://localhost:8002`
-- Catalog: `http://localhost:8003`
-- Media: `http://localhost:8004`
+The frontend and gateway are exposed on the host. Backend services are internal to the Docker
+network and are only reachable through the gateway - they do not bind to host ports.
+
+| Service | Host address | Note |
+|---|---|---|
+| Frontend | `http://localhost:3001` | Next.js, exposed on host |
+| Gateway | `http://localhost:8000` | All API calls go here |
+| Identity service | internal :8001 | gateway only |
+| Vendor service | internal :8002 | gateway only |
+| Catalog service | internal :8003 | gateway only |
+| Media service | internal :8004 | gateway only |
+| Admin service | internal :8005 | gateway only |
 
 ## Docker Notes
 
@@ -84,10 +90,18 @@ Services that still need further expansion:
 - If the stack has already been run before and you want clean marketplace data again, use `npm run seed:demo`.
 - If you change code and want to rebuild everything, run `docker compose up --build -d` again.
 
+## Environments
+
+| Environment | URL | Deployment |
+|---|---|---|
+| Production | served via Nginx on port 80 | manual `docker compose -f docker-compose.yml -f docker-compose.prod.yml up` |
+| Staging | served via Nginx on port 8080 | automatic on every push to `main` via GitHub Actions |
+
 ## Documentation
 
-- [Intern Quickstart Guide](/Users/woron/Documents/netiks-store/docs/INTERN_QUICKSTART_GUIDE.md)
-- [PRD](/Users/woron/Documents/netiks-store/docs/PRD.md)
-- [Project Documentation](/Users/woron/Documents/netiks-store/docs/PROJECT_DOCUMENTATION.md)
-- [Technical Plan](/Users/woron/Documents/netiks-store/docs/TECHNICAL_PLAN.md)
-- [Deployment Challenge Lab](/Users/woron/Documents/netiks-store/docs/DEPLOYMENT_CHALLENGE_LAB.md)
+- [Intern Quickstart Guide](docs/INTERN_QUICKSTART_GUIDE.md)
+- [PRD](docs/PRD.md)
+- [Project Documentation](docs/PROJECT_DOCUMENTATION.md)
+- [Technical Plan](docs/TECHNICAL_PLAN.md)
+- [Deployment Challenge Lab](docs/DEPLOYMENT_CHALLENGE_LAB.md)
+- [Terraform Infrastructure](infra/terraform/README.md)
