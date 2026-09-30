@@ -105,6 +105,14 @@ terraform destroy
 
 Never run `terraform destroy` against the production environment.
 
+## terraform plan output
+
+All existing resources are imported into state. The plan shows one pending action: creating
+the AcrPull role assignment that grants the VM's managed identity pull access to ACR.
+No existing resources are changed or destroyed.
+
+![terraform plan output](../../images/terraform_plan_netiks.png)
+
 ## What Is Not Yet Templated
 
 The following parts of the setup exist but are not yet covered by this Terraform code.
