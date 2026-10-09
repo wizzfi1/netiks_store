@@ -39,3 +39,8 @@ variable "public_ip_name" {
   type        = string
   description = "Name of the public IP address resource."
 }
+
+variable "ssh_allowed_cidr" {
+  type        = string
+  description = "CIDR range allowed to SSH into the VM. Use your office/home IP, not 0.0.0.0/0."
+}

@@ -39,6 +39,10 @@ echo "Importing NIC..."
 terraform import module.compute.azurerm_network_interface.main \
   "/subscriptions/${SUB}/resourceGroups/${RG}/providers/Microsoft.Network/networkInterfaces/netiks-vm826"
 
+echo "Importing NIC-NSG association..."
+terraform import module.compute.azurerm_network_interface_security_group_association.main \
+  "/subscriptions/${SUB}/resourceGroups/${RG}/providers/Microsoft.Network/networkInterfaces/netiks-vm826|/subscriptions/${SUB}/resourceGroups/${RG}/providers/Microsoft.Network/networkSecurityGroups/netiks-vm-nsg"
+
 echo "Importing VM..."
 terraform import module.compute.azurerm_linux_virtual_machine.main \
   "/subscriptions/${SUB}/resourceGroups/${RG}/providers/Microsoft.Compute/virtualMachines/netiks-vm"

@@ -30,6 +30,7 @@ module "networking" {
   subnet_prefix       = var.subnet_prefix
   nsg_name            = var.nsg_name
   public_ip_name      = var.public_ip_name
+  ssh_allowed_cidr    = var.ssh_allowed_cidr
 }
 
 module "compute" {

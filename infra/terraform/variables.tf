@@ -88,3 +88,8 @@ variable "registry_sku" {
   type    = string
   default = "Basic"
 }
+
+variable "ssh_allowed_cidr" {
+  type        = string
+  description = "CIDR range allowed to SSH into the VM. Set this to your office or home IP, e.g. 41.58.x.x/32."
+}
