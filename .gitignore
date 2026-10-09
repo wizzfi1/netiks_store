@@ -16,3 +16,6 @@ uploads/
 docs/docx_render_out/
 
 claude/
+
+# Kubernetes - never commit real Secret values
+k8s/02-secret.yaml
